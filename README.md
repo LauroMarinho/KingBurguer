@@ -2,7 +2,7 @@ KingBurguer 🍔
 
 Um aplicativo desenvolvido em Swift para gerenciamento de pedidos em uma hamburgueria. Criado como parte de um curso, este projeto demonstra minhas habilidades em desenvolvimento iOS.
 
-📸 Capturas de Tela
+📸 App
 
 ![image alt](https://github.com/LauroMarinho/KingBurguer/blob/89201b923a3d281572e1b4bd9ffcc1b640b4edf4/BannerKB.png)
 
