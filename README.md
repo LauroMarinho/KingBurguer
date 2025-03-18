@@ -1,6 +1,6 @@
 KingBurguer 🍔
 
-An app developed in Swift for order management in a burger restaurant. Created as part of a course, this project showcases my skills in iOS development.
+An app developed in Swift for order management in a burger restaurant, this project showcases my skills in iOS development.
 
 📸 App
 
