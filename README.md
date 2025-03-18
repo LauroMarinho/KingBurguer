@@ -1,50 +1,41 @@
 KingBurguer 🍔
 
-Um aplicativo desenvolvido em Swift para gerenciamento de pedidos em uma hamburgueria. Criado como parte de um curso, este projeto demonstra minhas habilidades em desenvolvimento iOS.
+An app developed in Swift for order management in a burger restaurant. Created as part of a course, this project showcases my skills in iOS development.
 
 📸 App
 
 ![image alt](https://github.com/LauroMarinho/KingBurguer/blob/89201b923a3d281572e1b4bd9ffcc1b640b4edf4/BannerKB.png)
 
-✨ Funcionalidades
+✨ Features
 
-Tela de login
+Login screen
+Registration screen
+List of available burgers
+Coupons page (In development)
+Profile page (In development)
+User-friendly and intuitive interface
 
-Tela de cadastro
-
-Listagem de hambúrgueres disponíveis
-
-Pagina de Cupons (Em desenvolvimento)
-
-Pagina de Perfil (Em desenvolvimento)
-
-Interface amigável e intuitiva
-
-🛠️ Tecnologias Utilizadas
+🛠️ Technologies Used
 
 Swift
-
-UIkit
-
+UIKit
 ViewCode
 
-🚀 Como Executar
+🚀 How to Run
 
-Clone este repositório:
+Clone this repository:
 
 git clone https://github.com/lauromarinho/KingBurguer.git
+Open the project in Xcode.
 
-Abra o projeto no Xcode.
+Run it on the simulator or a real device.
 
-Execute no simulador ou em um dispositivo real.
+📩 Contact
 
-📩 Contato
-
-Se quiser saber mais sobre o projeto ou entrar em contato:
-marinho.lauroo@gmail.com
+If you want to learn more about the project or get in touch:
+📧 marinho.lauroo@gmail.com
 
 LinkedIn
-
 www.linkedin.com/in/lauro-marinho-06869034a
 
-Sinta-se à vontade para contribuir ou deixar sugestões! 
+Feel free to contribute or share your suggestions! 🚀
