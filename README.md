@@ -7,6 +7,7 @@ Um aplicativo desenvolvido em Swift para gerenciamento de pedidos em uma hamburg
 
 
 ✨ Funcionalidades
+
 Tela de login
 
 Tela de cadastro
