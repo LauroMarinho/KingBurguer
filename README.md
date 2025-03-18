@@ -4,7 +4,7 @@ An app developed in Swift for order management in a burger restaurant. Created a
 
 📸 App
 
-![image alt](https://github.com/LauroMarinho/KingBurguer/blob/5911e25c6233114df0cceda50e49c4392276d4ba/PresentationApp.png)
+![image alt](https://github.com/LauroMarinho/KingBurguer/blob/8774d644134a2525884f22a656fd13740bb9269c/AppPresentation.png)
 
 ✨ Features
 
