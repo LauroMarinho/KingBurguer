@@ -4,7 +4,7 @@ Um aplicativo desenvolvido em Swift para gerenciamento de pedidos em uma hamburg
 
 📸 Capturas de Tela
 
-
+![image alt](https://github.com/LauroMarinho/KingBurguer/blob/89201b923a3d281572e1b4bd9ffcc1b640b4edf4/BannerKB.png)
 
 ✨ Funcionalidades
 
