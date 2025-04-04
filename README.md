@@ -4,7 +4,7 @@ An app developed in Swift with UIkit, for order management in a burger restauran
 
 📸 App
 
-!https://github.com/LauroMarinho/KingBurguer/blob/605b4add320dc1f455208201a13686b1511cfd0b/BannerAtt.png
+https://github.com/LauroMarinho/KingBurguer/blob/605b4add320dc1f455208201a13686b1511cfd0b/BannerAtt.png
 
 ✨ Features
 
