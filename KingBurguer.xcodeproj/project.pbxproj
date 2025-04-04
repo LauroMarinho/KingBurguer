@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		11BF7B552D9324270041CFD7 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 11BF7B542D9324270041CFD7 /* SDWebImage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		111449812D45413000333E31 /* KingBurguer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KingBurguer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11BF7B552D9324270041CFD7 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = KingBurguer;
 			packageProductDependencies = (
+				11BF7B542D9324270041CFD7 /* SDWebImage */,
 			);
 			productName = KingBurguer;
 			productReference = 111449812D45413000333E31 /* KingBurguer.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 111449782D45413000333E31;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				11BF7B532D9324270041CFD7 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 111449822D45413000333E31 /* Products */;
 			projectDirPath = "";
@@ -145,6 +154,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6GBZH9TRC6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KingBurguer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -157,7 +167,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.tiagoaguiar1.KingBurguer;
+				PRODUCT_BUNDLE_IDENTIFIER = co.lauromarinho.KingBurguer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -172,6 +182,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6GBZH9TRC6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KingBurguer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -184,7 +195,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.tiagoaguiar1.KingBurguer;
+				PRODUCT_BUNDLE_IDENTIFIER = co.lauromarinho.KingBurguer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -333,6 +344,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11BF7B532D9324270041CFD7 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11BF7B542D9324270041CFD7 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11BF7B532D9324270041CFD7 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 111449792D45413000333E31 /* Project object */;
 }

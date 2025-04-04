@@ -11,7 +11,7 @@ import Foundation
 
 class WebServiceAPI {
     
-    static let apiKey = ""
+    static let apiKey = "29cd1faf-0e36-4fff-b3f8-9699787450ed"
     static let baseURL = "https://hades.tiagoaguiar.co/kingburguer"
     
     static let shared = WebServiceAPI()
@@ -19,6 +19,20 @@ class WebServiceAPI {
     enum EndPoint: String {
         case createUser = "/users"
         case login = "/auth/login"
+        case refreshToken = "/auth/refresh-token"
+        case feed = "/feed"
+        case hightlights = "/highlight"
+        case productDetail = "/products/%d" // para criacao da id que e dinamico % e o tipo no caso e numero entao e decimal = d
+        case coupon = "/products/%d/coupon"
+        case me = "/users/me"
+        
+    }
+    
+    enum Method: String {
+        case post
+        case put
+        case get
+        case delete
     }
     
     enum NetworkError: Error {
@@ -34,8 +48,8 @@ class WebServiceAPI {
         case failure(NetworkError, Data?)
     }
     
-    private func completUrl(path: EndPoint) -> URLRequest? {
-        let endpoint = "\(WebServiceAPI.baseURL)\(path.rawValue)"
+    private func completUrl(path: String) -> URLRequest? {
+        let endpoint = "\(WebServiceAPI.baseURL)\(path)"
         guard let url = URL(string: endpoint) else {
             print("ERROR: URL \(endpoint) malformed!")
             return nil
@@ -44,89 +58,38 @@ class WebServiceAPI {
         
     }
     
-    // funcao do login
-    func login(request: SingInRequest, completion: @escaping(SignInResponse?, String?)-> Void){
-        call(path: .login, body: request) { result in
-            switch result {
-            case .success(let data):
-                guard let data = data else { return }
-                let response = try? JSONDecoder().decode(SignInResponse.self, from: data)
-                completion(response, nil)
-                break
-                
-            case .failure(let error, let data):
-                print("ERROR: \(error)")
-                
-                guard let data = data else { return }
-                
-                switch error {
-                case .unauthorized:
-                    let response = try? JSONDecoder().decode(SignUpResponseUnauthorized.self, from: data)
-                    completion(nil, response?.detail.message)
-                    break
-                    
-                default:
-                    let response = try? JSONDecoder().decode(SignUpResponseError.self, from: data)
-                    completion(nil, response?.detail)
-                    break
-                }
-                break
-            }
-        }
+    
+    // funcao de chamada de URL dinamica (pura) / product/1123455
+    func call(path: String, method: Method, accessToken: String? = nil, completion: @escaping (Result) -> Void){
+        makeRequest(path: path, body: nil, Method: method,accessToken: accessToken, completion: completion)
+    }
+    
+    // funcao de chamada para a requisicao fixa -> ENDPOINT e Body
+    func call<R: Encodable>(path: EndPoint, body: R?, Method: Method, accessToken: String? = nil, completion: @escaping (Result) -> Void) {
+        makeRequest(path: path.rawValue, body: body, Method: Method,accessToken: accessToken, completion: completion)
     }
     
     
-    // funcao para criar o usuario
-    func createUser(request: SignUpRequest, completion: @escaping (Bool?, String?) -> Void){
-        call(path: EndPoint.createUser, body: request) { result in
-            switch result {
-            case .success(let data):
-                guard let data = data else { return }
-                //let response = try? JSONDecoder().decode(SignUpResponse.self, from: data)
-                completion(true, nil)
-                break
-                
-            case .failure(let error, let data):
-                print("ERROR: \(error)")
-                
-                guard let data = data else { return }
-                switch error {
-                case .unauthorized:
-                    let response = try? JSONDecoder().decode(SignUpResponseUnauthorized.self, from: data)
-                    completion(nil, response?.detail.message)
-                    break
-                    
-                case .badRequest:
-                    let response = try? JSONDecoder().decode(SignUpResponseError.self, from: data)
-                    completion(nil, response?.detail)
-                    break
-                default:
-                    let response = try? JSONDecoder().decode(SignUpResponseError.self, from: data)
-                    completion(nil, response?.detail)
-                    break
-                    
-                }
-                break
-            }
-        }
-    }
-    
-    
-    
-    func call<R: Encodable>(path: EndPoint, body: R, completion: @escaping (Result) -> Void) {
-        
+    // funcao de requisicao
+    func makeRequest(path: String, body: Encodable?, Method: Method, accessToken: String? = nil, completion: @escaping (Result) -> Void) {
         do {
-            let jsonRequest = try JSONEncoder().encode(body)
             
             guard var request = completUrl(path: path) else {return}
             
-            request.httpMethod = "POST"
+            request.httpMethod = Method.rawValue.uppercased()
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("application/json", forHTTPHeaderField: "accept")
             request.setValue(WebServiceAPI.apiKey, forHTTPHeaderField: "x-secret-key")
             
-            request.httpBody = jsonRequest
+            if let accessToken = accessToken {
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            }
             
+            if let body = body {
+                let jsonRequest = try JSONEncoder().encode(body)
+                request.httpBody = jsonRequest
+            }
+                
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 // asincrono
                 print("Response is \(String(describing: response))")
@@ -161,7 +124,7 @@ class WebServiceAPI {
                     }
                 }
                 
-                completion(.success(data))
+                return
             }
             task.resume()
         } catch {

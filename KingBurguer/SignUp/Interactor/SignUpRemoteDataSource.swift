@@ -11,8 +11,9 @@ class SignUpRemoteDataSource {
     
     static let shared = SignUpRemoteDataSource()
     
+    // funcao para criar o usuario
     func createUser(request: SignUpRequest, completion: @escaping (Bool?, String?) -> Void) {
-        WebServiceAPI.shared.call(path: .createUser, body: request) { result in
+        WebServiceAPI.shared.call(path: .createUser, body: request, Method: .post) { result in
             switch result {
                 case .success(let data):
                     guard let data = data else { return }

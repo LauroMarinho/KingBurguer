@@ -27,11 +27,17 @@ class SignInViewModel {
         }
     }
     
+    private let interactor: SignInInteractor
+    
+    init (interactor: SignInInteractor) {
+        self.interactor = interactor
+    }
+    
     func send () { // -> vai receber o send da viewController
         state = .loading // mudando o valor da variael state
         
-        WebServiceAPI.shared.login(request: SingInRequest(username: email,
-                                                          password: password)) { response, error in
+        interactor.login(request: SignInRequest(username: email,
+                                                password: password)) { response, error in
             DispatchQueue.main.async {
                 if let errorMessage = error {
                     self.state = .error(errorMessage)

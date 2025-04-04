@@ -36,8 +36,8 @@ class SingInViewController: UIViewController {
         let ed = TextField()
         ed.placeholder = "Entre com seu e-mail" // campo de texto (dica do que fazer naquela caixa)
         ed.returnKeyType = .next // muda o nome do botao de retorno do teclado do iphone para seguinte
-        ed.erro = "E-mai invalido"
-        ed.keybordType = .emailAddress // altera o tipo de teclado para teclado de e-email, tem varias opcoes
+        ed.error = "E-mai invalido"
+        ed.keyboardType = .emailAddress // altera o tipo de teclado para teclado de e-email, tem varias opcoes
         // forma tradicional
         //ed.failure = validation // validacao da regra
         ed.bitmask = SignInForm.email.rawValue // rawValue e para pegar o valor
@@ -63,7 +63,7 @@ class SingInViewController: UIViewController {
         let ed = TextField()
         ed.placeholder = "Entre com sua senha"
         ed.returnKeyType = .done // muda o nome do botao de retorno do teclado do iphone para concluido
-        ed.erro = "Senha deve ter no minimo 8 caracteres"
+        ed.error = "Senha deve ter no minimo 8 caracteres"
         ed.secureTextEntry = true
         ed.bitmask = SignInForm.password.rawValue
         ed.failure = {
@@ -253,7 +253,8 @@ extension SingInViewController: TextFieldDelegate {
         }
         // Para que o botao so seja ativado quando a condicao for aceita
         //                para verificar se os dois campo estao validos -> email && senha = true
-        self.send.enable((SignInForm.email.rawValue & self.bitmaskResult != 0) && (SignInForm.password.rawValue & self.bitmaskResult != 0))
+        self.send.enable((SignInForm.email.rawValue & self.bitmaskResult != 0)
+                         && (SignInForm.password.rawValue & self.bitmaskResult != 0))
         
         if bitmask == SignInForm.email.rawValue {
             viewModel?.email = text

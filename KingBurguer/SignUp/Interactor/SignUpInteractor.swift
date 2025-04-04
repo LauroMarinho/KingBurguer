@@ -8,7 +8,7 @@
 import Foundation
 
 
-class SignUpInteractor {
+    class SignUpInteractor {
     
     private let remote: SignUpRemoteDataSource = .shared
     

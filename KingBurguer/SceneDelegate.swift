@@ -11,6 +11,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    let local: LocalDataSource = .shared
+    
+    var homeCoordinator: HomeCoordinator!
+    
+    private let interactor = SplashInteractor()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
        
@@ -18,9 +23,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         // window representa a caixa do iPhone (tela), utilizando o "windowScene.coordinateSpace.bounds" pega todas as coordenadas (dimensões do iPhone)
         window?.windowScene = windowScene // Esse é o objeto que possui a cena principal
-        let signInCoordinator = SignInCoordinator(window: window)
-        signInCoordinator.start()
         
+        
+        // Para tela cair direto dentro do app caso token esteja validado
+        if let userAuth = local.getUserAuth(){
+            if Date().timeIntervalSince1970 > Double(userAuth.expiresSeconds){
+                print("Expirou!!!")
+                // fazer o refresh aqui ...
+                
+                interactor.login(request: SplashRequest(refreshToken: userAuth.refreshToken)) { response , error in
+                    DispatchQueue.main.async {
+                        if error {
+                            let signInCoordinator = SignInCoordinator(window: self.window)
+                            signInCoordinator.start()
+                        } else {
+                            self.homeCoordinator = HomeCoordinator(window: self.window)
+                            self.homeCoordinator.start()
+                        }
+                    }
+                    
+                }
+            } else {
+                homeCoordinator = HomeCoordinator(window: window)
+                homeCoordinator.start()
+            }
+        } else {
+            let signInCoordinator = SignInCoordinator(window: window)
+            signInCoordinator.start()
+        }
+        
+        window?.makeKeyAndVisible() // Deixar a tela vísivel
 
     }
 

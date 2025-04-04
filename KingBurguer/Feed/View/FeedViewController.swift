@@ -11,8 +11,18 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let sections = ["Mais vendidos", "Vegano", "Bovinos", "Sobremesas"]
+    var sections: [CategoryResponse] = []
     
+    private var headerView: HighlightView!
+    
+    private let progress: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView()
+        aiv.backgroundColor = .systemBackground
+        aiv.startAnimating()
+        
+        return aiv
+    }()
+     
     // 1. registrar uma classe que seja UItableViewCell
     // 2. definir o dataSource (viewController)
     // 3. definir os metodos obrigatorios -> numberOfRowsInSection(numero de linhas) | cellForRowAt(renderizacao da linha visual do usuario)
@@ -27,26 +37,42 @@ class FeedViewController: UIViewController {
         return tv
     } ()
     
+    
+    var viewModel: FeedViewModel? {
+        didSet{
+            viewModel?.delegate = self
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        navigationController?.title = "Inicio"
+        navigationController?.tabBarItem.image = UIImage(systemName: "house")
 
         view.addSubview(homeFeedTable)
+        view.addSubview(progress)
         
         // criando um banner , componente de destaque
-        let headerView = HighlightView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 300))
+        headerView = HighlightView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 210))
         headerView.backgroundColor = .orange
         homeFeedTable.tableHeaderView = headerView
         
+        headerView.delegate = self
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
         
         configureNavBar() // barra de navegacao
+        
+        viewModel?.fetch()
+        viewModel?.fetchHighlight()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeFeedTable.frame = view.bounds
+        progress.frame = view.bounds
     }
     
     // funcao para a barra de navegacao superior
@@ -89,7 +115,11 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate { // cr
     }
     // altura da linha dentro da sessao
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 220
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].name
     }
     
     // definir tamanho do titulo da sessao
@@ -99,17 +129,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate { // cr
 
     
     // adicionar um titulo a sessao
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 40))
+    func tableView(_ tableView: UITableView, viewForHeaderInSection view: UIView, forsection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {return}
         
-        let label = UILabel(frame: CGRect(x: 20, y: 0, width: tableView.bounds.width, height: 40))
-        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.textColor = .label
-        label.text = sections[section].uppercased()
-        
-        view.addSubview(label)
-        
-        return view
+        header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 120, height: header.bounds.height)
+        header.textLabel?.textColor = .label
     }
     
     // celula para a linha expecifica
@@ -117,7 +142,45 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate { // cr
         // as! fez um quest, converteu a classe mae UITableView na classe filha FeedTableViewCell
         let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as! FeedTableViewCell
         
-        // cell.textLabel?.text = "Ola mundo \(indexPath.section) \(indexPath.row)"
+        cell.products.append(contentsOf: sections[indexPath.section].products)
+        cell.delegate = self
+        
         return cell
+    }
+}
+
+extension FeedViewController:FeedViewModelDelegate, FeedCollectionViewDelegate, HighlightViewDelegate {
+    
+    func highlightSelected(productId: Int) {
+        viewModel?.goToProductDetail(id: productId)
+    }
+    
+    func itemSelected(productId: Int) {
+        viewModel?.goToProductDetail(id: productId)
+    }
+    
+    func viewModelDidChange(state: FeedState) {
+        switch(state) {
+        case .loading:
+            break
+        case .success(let response):
+            progress.stopAnimating()
+            self.sections = response.categories
+            self.homeFeedTable.reloadData()
+            break
+         
+        case .successHighlight(let response):
+            guard let url = URL(string: response.pictureUrl) else { break }  
+            headerView.imagineView.sd_setImage(with: url)
+            headerView.productId = response.productId
+            break
+            
+        case .error (let msg):
+            progress.stopAnimating()
+            self.homeFeedTable.reloadData()
+            break
+            
+        
+        }
     }
 }

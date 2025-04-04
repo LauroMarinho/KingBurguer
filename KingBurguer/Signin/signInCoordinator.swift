@@ -21,9 +21,12 @@ class SignInCoordinator {
     }
     
     func start() {
+        
+        let interactor = SignInInteractor()
+        
         // coneccao entre viewController por coordantor e a viewModel
         // tela principal
-        let viewModel = SignInViewModel() // crio viewModel
+        let viewModel = SignInViewModel(interactor: interactor) // crio viewModel
         viewModel.coordinator = self // especifica que o SignInCoordinator o coordinator e o responsavel por isso
         
         let signInVC = SingInViewController() // criou a ViewController
@@ -32,14 +35,12 @@ class SignInCoordinator {
         navigationController.pushViewController(signInVC, animated: true)
         
         window?.rootViewController = navigationController
-        window?.makeKeyAndVisible() // Deixar a tela vísivel
     }
     
     func singUp () {
         let singUpCoordinator = SignUpCoordinator(navigationController: navigationController)
         singUpCoordinator.parentCoordinator = self
         singUpCoordinator.start()
-        
     }
     
     func home() {

@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+
+// resposta para a tela de perfil
+
+
+struct UserResponse: Decodable {
+    
+    let id: Int
+    let name: String
+    let email: String
+    let document: String
+    let birthday: String
+   
+}
+

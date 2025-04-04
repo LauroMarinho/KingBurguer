@@ -6,3 +6,5 @@
 //
 
 import Foundation
+
+struct FeedRequest: Encodable{}

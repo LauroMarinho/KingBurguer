@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct SingInRequest: Encodable {
+
+struct SignInRequest: Encodable {
     
     let username: String
     let password: String
-
-
     
-    enum codingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case username
         case password
     }
+    
 }

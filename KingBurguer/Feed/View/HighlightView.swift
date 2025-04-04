@@ -7,18 +7,26 @@
 
 import UIKit
 
+protocol HighlightViewDelegate {
+    func highlightSelected(productId: Int)
+}
+
 // View do banner de destaque
 
 class HighlightView: UIView {
     
     // adicionar a imagem
-    private let imagineView: UIImageView = {
+        let imagineView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill // impurra para a imagem para frente , sem distorcer
+            iv.contentMode = .scaleAspectFit // ajustar a imagem a caixa
         iv.image = UIImage(named: "highlight")
         iv.clipsToBounds = true
         return iv
     } ()
+    
+    var productId: Int!
+    
+    var delegate: HighlightViewDelegate?
     
     // adicionar botao no banner
     private let moreButton: UIButton = {
@@ -29,8 +37,13 @@ class HighlightView: UIView {
         btn.layer.cornerRadius = 5 // arredondar bordas
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right:8)
+        btn.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return btn
     } ()
+    
+    @objc func buttonTapped() {
+        delegate?.highlightSelected(productId: productId)
+    }
     
     
     override init(frame: CGRect) {
@@ -56,7 +69,7 @@ class HighlightView: UIView {
         // constratrains do botao
         let moreButtonConstraints = [
             moreButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -8),
-            moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
+            moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
         ]
         // ativar o botao
         NSLayoutConstraint.activate(moreButtonConstraints)
