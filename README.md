@@ -1,10 +1,10 @@
 KingBurguer 🍔
 
-An app developed in Swift for order management in a burger restaurant, this project showcases my skills in iOS development.
+An app developed in Swift with UIkit, for order management in a burger restaurant. With Local Database, API Integration, MVVM.
 
 📸 App
 
-![image alt](https://github.com/LauroMarinho/KingBurguer/blob/8774d644134a2525884f22a656fd13740bb9269c/AppPresentation.png)
+!https://github.com/LauroMarinho/KingBurguer/blob/605b4add320dc1f455208201a13686b1511cfd0b/BannerAtt.png
 
 ✨ Features
 
@@ -14,11 +14,10 @@ Registration screen
 
 List of available burgers
 
-Coupons page (In development)
+Product Details 
 
-Profile page (In development)
+Profile page
 
-User-friendly and intuitive interface
 
 🛠️ Technologies Used
 
@@ -27,6 +26,8 @@ Swift
 UIKit
 
 ViewCode
+
+API integration
 
 🚀 How to Run
 
