@@ -39,7 +39,7 @@ class SignUpViewController: UIViewController {
         ed.tag = 1
         ed.bitmask = SingUpForm.name.rawValue
         ed.returnKeyType = .next
-        ed.erro = "Nome deve ter no minimo 3 caracteres"
+        ed.error = "Nome deve ter no minimo 3 caracteres"
         ed.failure = {
             return ed.text.count < 3
         }
@@ -53,8 +53,8 @@ class SignUpViewController: UIViewController {
         ed.tag = 2
         ed.bitmask = SingUpForm.email.rawValue
         ed.returnKeyType = .next
-        ed.keybordType = .emailAddress
-        ed.erro = "E-mail invalido"
+        ed.keyboardType = .emailAddress
+        ed.error = "E-mail invalido"
         ed.failure = {
             return !ed.text.isEmail()
         }
@@ -69,7 +69,7 @@ class SignUpViewController: UIViewController {
         ed.bitmask = SingUpForm.password.rawValue
         ed.returnKeyType = .next
         ed.secureTextEntry = true
-        ed.erro = "Password deve ter no minimo 8 caracteres"
+        ed.error = "Password deve ter no minimo 8 caracteres"
         ed.failure = {
             return ed.text.count < 8
         }
@@ -84,8 +84,8 @@ class SignUpViewController: UIViewController {
         ed.maskField = Mask(mask: "###.###.###-##") // adicinou a class que vai ter a mascara com o padrao -. # sera os numeros 
         ed.bitmask = SingUpForm.document.rawValue
         ed.returnKeyType = .next
-        ed.keybordType = .numberPad // teclado com com numeros
-        ed.erro = "CPF deve ter no minimo 11 digitos"
+        ed.keyboardType = .numberPad // teclado com com numeros
+        ed.error = "CPF deve ter no minimo 11 digitos"
         ed.failure = {
             return ed.text.count != 14
         }
@@ -100,8 +100,8 @@ class SignUpViewController: UIViewController {
         ed.maskField = Mask(mask: "##/##/####")
         ed.bitmask = SingUpForm.birthday.rawValue
         ed.returnKeyType = .done
-        ed.keybordType = .numberPad
-        ed.erro = "Data de nascimento deve ser dd/MM/yyyy"
+        ed.keyboardType = .numberPad
+        ed.error = "Data de nascimento deve ser dd/MM/yyyy"
         ed.failure = {
             let invalidCount = ed.text.count != 10
             // para verificar se a data e uma data real ou seja nao e (32/02/2022)

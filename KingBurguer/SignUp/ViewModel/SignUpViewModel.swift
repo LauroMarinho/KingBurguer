@@ -32,6 +32,12 @@ class SignUpViewModel {
         }
     }
     
+    private let interactor: SignUpInteractor
+    
+    init (interactor: SignUpInteractor){
+        self.interactor = interactor
+    }
+    
     func send() {
         state = .loading
         
@@ -52,7 +58,7 @@ class SignUpViewModel {
         let documentFormatted = document.digits
         
         // MAIN-THREAD
-        WebServiceAPI.shared.createUser(request: SignUpRequest(name: name,
+       interactor.createUser(request: SignUpRequest(name: name,
                                                                email: email,
                                                                password: password,
                                                                document: documentFormatted,
